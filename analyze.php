@@ -1,7 +1,5 @@
 <?php
 
-
-
 function downloadPage($url) {
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
