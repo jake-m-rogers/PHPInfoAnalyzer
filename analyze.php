@@ -1,5 +1,7 @@
 <?php
 
+
+
 function downloadPage($url) {
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -27,14 +29,30 @@ function parse($html) {
   $disabled_classes = $data["disable_classes"];
   $cve = getCVE($version);
   $safe_mode = $data["safe_mode"];
+  $open_base = $data["open_basedir"];
   
+  print("\n");
   print("PHP Version: " . $version . "\n");
+  print("\n");
+  print("\n");
   print("CVE URL: " . $cve[0] . "\n");
+  print("\n");
+  print("\n");
   print("Related CVE's: " . implode(", ", $cve[1]) . "\n");
+  print("\n");
+  print("\n");
   print("Disabled Functions: " . $disabled_functions . "\n");
   print("Disabled Classes: " . $disabled_classes . "\n");
+  print("\n");
+  print("\n");
   print("Safe Mode: " . $safe_mode . "\n");
-  print("Document Root: " . $DOCUMENT_ROOT . "\n");
+  print("\n");
+  print("\n");
+  print("open_basedir: " . $open_base . "\n");
+  print("\n");
+  print("\n");
+  
+  
 }
 
 function getCVE($version, $page = false) {
@@ -64,9 +82,70 @@ function getCVE($version, $page = false) {
   }
 }
 
+/*
+
+function searchBing($url) {
+	  
+	  $ip = gethostbyname($arg);
+	  echo $ip;
+	  }
+	  
+function searchCrush($url) {
+
+      $ip = gethostbyname($arg);
+	  echo $ip;
+	  }
+	  
+*/
+
+ function wafTest($url) {
+
+  $agent = "<script></script> /bin/sh ARGS NULL UNION SELECT order by ../../ etc/passwd";
+  
+  $ch = curl_init($url);
+  curl_setopt ($ch, CURLOPT_USERAGENT, $agent);
+  curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt ($ch, CURLOPT_VERBOSE,false);
+  curl_setopt ($ch, CURLOPT_TIMEOUT, 5);
+  $page=curl_exec($ch);  
+  $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  curl_close($ch);
+  
+  $return_code = '0';
+  
+  if($httpcode>=200 && $httpcode<300)
+  {
+    $return_code = 1;
+  }    
+  
+  if($return_code==1)
+  {
+    if(preg_match('/Fatal/',$page))
+    {
+       $return_code = 2;
+    }
+    
+    if(preg_match('/Parse error/',$page))
+    {
+       $return_code = 2;
+    }
+  }
+  
+  return $return_code;
+}
+
+
 for ($i = 1; $i < count($argv); $i++) {
   $arg = $argv[$i];
   parse(downloadPage($arg));
+  if(wafTest($arg) === 1) {
+  print("No WAF Detected");
+  }
+  else {
+  print("Page did not respond, WAF likely");
+  }
+  print("\n");
+  print("\n");
 }
 
 ?>
