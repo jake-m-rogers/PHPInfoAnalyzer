@@ -32,3 +32,5 @@ It will currently perform the following tasks;
 CRUSH is a third party service not owned or maintained by the author
 
 BING is a third party service not owned or maintained by the author
+
+Maintained by @jake_m_rogers with help from @bdpuk
