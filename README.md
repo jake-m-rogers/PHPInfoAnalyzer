@@ -18,6 +18,7 @@ It will currently perform the following tasks;
 - Integrate waffit for better WAF detection
 - Check to see if mod_security is enabled
 - Check for path disclosure
+- RBL lookups
 
 ## Roadmap
 
