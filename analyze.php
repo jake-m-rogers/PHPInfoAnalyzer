@@ -59,8 +59,7 @@ function getCVE($version, $page = false) {
       $more_cves = getCVE($version, "http://www.cvedetails.com" . $page);
       array_merge($cves, $more_cves);
     }
-
-    return array($location, $cves);
+   return array($location, $cves);
   }
 }
 

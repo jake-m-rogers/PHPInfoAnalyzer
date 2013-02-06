@@ -25,3 +25,11 @@ PHPIA is currently taking baby steps, it will currently determine the following;
 CRUSH is a third party service not owned or maintained by the author
 
 BING is a third party service not owned or maintained by the author
+
+Currently maintained by
+
+@jake_m_rogers
+
+With the help of
+
+@bdpuk
